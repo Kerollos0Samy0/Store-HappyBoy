@@ -2,30 +2,29 @@ const sharp = require('sharp');
 const fs = require('fs');
 
 async function makeRound() {
-  const inputPath = 'src/app/icon.png';
-  const outputPath = 'src/app/icon_round.png';
+  const inputPath = 'src/app/icon_source.png';
   
-  // Create a circular SVG mask
   const width = 256;
   const height = 256;
+  const faceSize = 160; 
+  
+  // 1. Create the face buffer
+  const faceBuffer = await sharp(inputPath)
+    .resize(faceSize, faceSize, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .png()
+    .toBuffer();
+
+  // 2. Create a white circle with transparent corners
   const circleSvg = `<svg width="${width}" height="${height}"><circle cx="${width/2}" cy="${height/2}" r="${width/2}" fill="#ffffff"/></svg>`;
   
-  await sharp(inputPath)
-    .resize(width, height, { fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 1 } })
-    .composite([{ input: Buffer.from(circleSvg), blend: 'dest-in' }])
-    .toFile(outputPath);
-    
-  // Also add a white background under the circle so it's a solid white circle
-  await sharp({ create: { width, height, channels: 4, background: { r: 255, g: 255, b: 255, alpha: 0 } } })
+  // 3. Composite the face over the white circle
+  await sharp(Buffer.from(circleSvg))
     .composite([
-      { input: Buffer.from(`<svg width="${width}" height="${height}"><circle cx="${width/2}" cy="${height/2}" r="${width/2}" fill="#ffffff"/></svg>`) },
-      { input: outputPath, blend: 'over' }
+      { input: faceBuffer, gravity: 'center' }
     ])
-    .toFile('src/app/icon_final.png');
+    .png()
+    .toFile('src/app/icon.png');
 
-  fs.copyFileSync('src/app/icon_final.png', 'src/app/icon.png');
-  fs.unlinkSync(outputPath);
-  fs.unlinkSync('src/app/icon_final.png');
   console.log("Done");
 }
 

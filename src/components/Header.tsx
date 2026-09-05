@@ -72,8 +72,8 @@ export default function Header() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center py-2">
-            <Link href="/" className="flex items-center">
-              <Image src="/logo.png" alt="HappyBoy Logo" width={225} height={75} className="object-contain max-h-20 mix-blend-multiply" />
+            <Link href="/" className="flex items-center hover:opacity-80 transition-opacity cursor-pointer">
+              <Image src="/logo.png" alt="HappyBoy Logo" width={250} height={85} className="object-contain max-h-24 mix-blend-multiply" />
             </Link>
           </div>
 
