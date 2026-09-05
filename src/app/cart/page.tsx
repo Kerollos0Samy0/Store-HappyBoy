@@ -4,7 +4,7 @@ import { useCart } from "@/components/CartProvider";
 import Link from "next/link";
 import { useState } from "react";
 import { initializeApp, getApps } from "firebase/app";
-import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { getFirestore, collection, addDoc, serverTimestamp, doc, runTransaction } from "firebase/firestore";
 
 // Initialize Firebase securely
 const firebaseConfig = {
@@ -39,15 +39,32 @@ export default function CartPage() {
     setIsSubmitting(true);
     
     try {
-      // Create order object matching the admin panel's structure
+      // 1. Generate sequential orderNumber using transaction
+      const counterRef = doc(db, "counters", "orders");
+      let newOrderNumber = 1;
+      
+      await runTransaction(db, async (transaction) => {
+        const counterDoc = await transaction.get(counterRef);
+        if (counterDoc.exists()) {
+          newOrderNumber = (counterDoc.data().current || 0) + 1;
+          transaction.update(counterRef, { current: newOrderNumber });
+        } else {
+          transaction.set(counterRef, { current: 1 });
+        }
+      });
+      
+      const formattedOrderNumber = String(newOrderNumber).padStart(5, "0");
+
+      // 2. Create order object matching the admin panel's structure
       const order = {
+        orderNumber: formattedOrderNumber,
         customerName: name,
-        shopName: shopName,
-        governorate: governorate,
-        city: city,
+        customerBrand: shopName, // Match admin schema
+        customerGovernorate: governorate, 
+        customerCountry: city, // Changed to match admin schema 
         customerPhone: phone,
-        address: address,
-        status: "قيد المراجعة",
+        customerAddress: address,
+        status: "pending", 
         total: totalPrice,
         createdAt: serverTimestamp(),
         items: items.map(item => ({
@@ -55,8 +72,9 @@ export default function CartPage() {
           modelNumber: item.modelNumber,
           color: item.color,
           selectedColor: item.color,
+          colorBarcode: item.colorBarcode || "",
           size: item.size,
-          quantity: item.quantity, // This is now number of packs (ثري)
+          quantity: item.quantity,
           price: item.price
         })),
         source: "Store"
