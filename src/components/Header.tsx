@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
+import { useCart } from "./CartProvider";
 
 const navigation = [
   {
@@ -62,6 +63,7 @@ const navigation = [
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const { totalItems } = useCart();
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -122,9 +124,11 @@ export default function Header() {
           <div className="flex items-center space-x-4 space-x-reverse">
             <Link href="/cart" className="relative text-gray-700 hover:text-blue-600 transition-colors p-2">
               <ShoppingCart className="w-6 h-6" />
-              <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-red-500 rounded-full">
-                0
-              </span>
+              {totalItems > 0 && (
+                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-red-500 rounded-full">
+                  {totalItems}
+                </span>
+              )}
             </Link>
 
             {/* Mobile menu button */}
