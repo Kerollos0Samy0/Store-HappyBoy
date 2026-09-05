@@ -205,13 +205,14 @@ export default function CartPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">البلد / المركز</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">البلد</label>
                     <input
                       type="text"
                       required
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
                       className="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#4B9B9E] focus:ring-[#4B9B9E] border p-2.5 outline-none transition-all"
+                      placeholder="مثال: مصر"
                     />
                   </div>
                   <div>
