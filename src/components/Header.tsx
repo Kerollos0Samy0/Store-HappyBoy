@@ -73,7 +73,7 @@ export default function Header() {
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center py-2">
             <Link href="/" className="flex items-center">
-              <Image src="/logo.png" alt="HappyBoy Logo" width={180} height={60} className="object-contain max-h-16 mix-blend-multiply" />
+              <Image src="/logo.png" alt="HappyBoy Logo" width={225} height={75} className="object-contain max-h-20 mix-blend-multiply" />
             </Link>
           </div>
 
