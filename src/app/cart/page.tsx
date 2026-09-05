@@ -98,10 +98,25 @@ export default function CartPage() {
   if (success) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-20 text-center">
-        <div className="bg-[#4B9B9E]/10 text-[#4B9B9E] p-8 rounded-2xl border border-[#4B9B9E]/20">
-          <h1 className="text-3xl font-bold mb-4">تم إرسال طلبك بنجاح! 🎉</h1>
-          <p className="text-lg mb-8 text-gray-700">سنتواصل معك قريباً لتأكيد تفاصيل الشحن وموعد الاستلام.</p>
-          <Link href="/" className="bg-[#A3292E] text-white px-6 py-3 rounded-xl font-bold hover:bg-opacity-90">
+        <div className="bg-[#4B9B9E]/10 text-[#4B9B9E] p-8 rounded-2xl border border-[#4B9B9E]/20 shadow-sm">
+          <h1 className="text-3xl font-bold mb-4 text-[#4B9B9E]">تم إرسال طلبك بنجاح! 🎉</h1>
+          <p className="text-lg mb-6 text-gray-700">لقد استلمنا طلبك، وسنقوم بتجهيزه في أقرب وقت.</p>
+          
+          <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-8 max-w-lg mx-auto">
+            <h3 className="font-bold text-gray-900 mb-2">الخطوة الأخيرة (تأكيد الطلب)</h3>
+            <p className="text-gray-600 mb-4 text-sm">برجاء التواصل معنا عبر الواتساب لتأكيد الطلب ودفع العربون للبدء في الشحن.</p>
+            <a 
+              href="https://wa.me/201200093605" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-xl font-bold hover:bg-opacity-90 transition-all shadow-md"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 1.843 6.37L.208 24l5.823-1.503A12 12 0 0 0 11.944 24c6.627 0 12-5.373 12-12s-5.373-12-12-12zm.056 21.8A9.82 9.82 0 0 1 7.02 20.53l-.356-.21-3.864 1.002 1.026-3.723-.23-.362A9.82 9.82 0 0 1 2.18 12c0-5.414 4.406-9.82 9.82-9.82s9.82 4.406 9.82 9.82-4.406 9.82-9.82 9.82zm5.348-7.348c-.294-.147-1.74-.86-2.01-.958-.268-.1-.464-.148-.66.147-.196.294-.757.958-.927 1.155-.17.195-.34.22-.634.073-.294-.148-1.24-.457-2.36-1.453-.873-.775-1.46-1.733-1.63-2.028-.17-.294-.018-.452.128-.6.133-.134.294-.344.44-.515.148-.173.197-.295.295-.49.1-.197.05-.37-.024-.516-.074-.148-.66-1.593-.904-2.182-.238-.575-.48-.496-.66-.505h-.565c-.197 0-.517.074-.787.37-.27.294-1.033 1.006-1.033 2.454 0 1.448 1.057 2.85 1.204 3.045.148.196 2.07 3.16 5.016 4.43.7.303 1.246.483 1.67.62.702.222 1.343.19 1.848.115.568-.083 1.74-.712 1.986-1.4.246-.687.246-1.275.17-1.4-.073-.122-.27-.195-.563-.343z"/></svg>
+              تواصل معنا الآن (واتساب)
+            </a>
+          </div>
+
+          <Link href="/" className="inline-block bg-[#A3292E] text-white px-8 py-3 rounded-xl font-bold hover:bg-opacity-90 transition-colors">
             العودة للتسوق
           </Link>
         </div>
