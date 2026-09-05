@@ -25,7 +25,7 @@ export default function RootLayout({
             {children}
           </main>
           <footer className="bg-gray-900 text-white py-8 text-center mt-12 relative">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-teal to-brand-red"></div>
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#4B9B9E] to-[#A3292E]"></div>
             <p>جميع الحقوق محفوظة &copy; {new Date().getFullYear()} HappyBoy</p>
           </footer>
         </CartProvider>

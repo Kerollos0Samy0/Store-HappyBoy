@@ -32,7 +32,7 @@ export default async function Home() {
       {/* Hero Section */}
       <section className="relative bg-gray-900 text-white overflow-hidden">
         {/* Brand Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-teal to-brand-red opacity-90 z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#4B9B9E] to-[#A3292E] opacity-90 z-0"></div>
         
         <div className="relative z-10 max-w-7xl mx-auto text-center py-24 px-4 sm:py-32">
           <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight drop-shadow-md">
@@ -43,7 +43,7 @@ export default async function Home() {
           </p>
           <Link 
             href="/category/winter/boys/middle" 
-            className="bg-white text-gray-900 font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:bg-gray-100 transition-all hover:scale-105 inline-block border-b-4 border-brand-red"
+            className="bg-white text-gray-900 font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:bg-gray-100 transition-all hover:scale-105 inline-block border-b-4 border-[#A3292E]"
           >
             تسوق الكوليكشن الجديد الآن
           </Link>
@@ -53,7 +53,7 @@ export default async function Home() {
       {/* Featured Products Placeholder */}
       <section className="max-w-7xl mx-auto py-16 px-4 w-full">
         <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center relative">
-          <span className="bg-gray-50 px-6 relative z-10 border-b-4 border-brand-teal pb-2">وصل حديثاً</span>
+          <span className="bg-gray-50 px-6 relative z-10 border-b-4 border-[#4B9B9E] pb-2">وصل حديثاً</span>
           <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-200 -z-0"></div>
         </h2>
         

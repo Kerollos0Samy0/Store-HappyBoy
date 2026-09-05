@@ -86,14 +86,14 @@ export default function Header() {
                 onMouseEnter={() => setActiveDropdown(category.title)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button className="flex items-center text-gray-700 hover:text-brand-teal font-medium px-3 py-2 text-lg transition-colors">
+                <button className="flex items-center text-gray-700 hover:text-[#4B9B9E] font-medium px-3 py-2 text-lg transition-colors">
                   {category.title}
                   <ChevronDown className="ml-1 w-4 h-4" />
                 </button>
 
                 {/* Mega Menu Dropdown */}
                 {activeDropdown === category.title && (
-                  <div className="absolute top-20 right-0 w-max bg-white shadow-xl rounded-b-xl border-t-2 border-brand-teal grid grid-cols-2 gap-8 p-6 transition-all duration-200">
+                  <div className="absolute top-20 right-0 w-max bg-white shadow-xl rounded-b-xl border-t-2 border-[#4B9B9E] grid grid-cols-2 gap-8 p-6 transition-all duration-200">
                     {category.subcategories.map((sub) => (
                       <div key={sub.title} className="flex flex-col">
                         {category.title !== "رياضي" && (
@@ -106,7 +106,7 @@ export default function Header() {
                             <li key={link.name}>
                               <Link
                                 href={link.href}
-                                className="text-gray-600 hover:text-brand-teal hover:translate-x-1 block transition-all"
+                                className="text-gray-600 hover:text-[#4B9B9E] hover:translate-x-1 block transition-all"
                               >
                                 {link.name}
                               </Link>
@@ -123,10 +123,10 @@ export default function Header() {
 
           {/* Cart Icon */}
           <div className="flex items-center space-x-4 space-x-reverse">
-            <Link href="/cart" className="relative text-gray-700 hover:text-brand-teal transition-colors p-2">
+            <Link href="/cart" className="relative text-gray-700 hover:text-[#4B9B9E] transition-colors p-2">
               <ShoppingCart className="w-6 h-6" />
               {totalItems > 0 && (
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-brand-red rounded-full">
+                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-[#A3292E] rounded-full">
                   {totalItems}
                 </span>
               )}
@@ -160,7 +160,7 @@ export default function Header() {
                          <li key={link.name}>
                           <Link
                             href={link.href}
-                            className="text-gray-600 block py-1 hover:text-brand-teal"
+                            className="text-gray-600 block py-1 hover:text-[#4B9B9E]"
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
                             - {link.name}
@@ -178,8 +178,8 @@ export default function Header() {
 
       {/* The Two Brand Stripes */}
       <div className="w-full flex flex-col">
-        <div className="h-1 w-full bg-brand-teal"></div>
-        <div className="h-1 w-full bg-brand-red mt-[1px]"></div>
+        <div className="h-1 w-full bg-[#4B9B9E]"></div>
+        <div className="h-1 w-full bg-[#A3292E] mt-[1px]"></div>
       </div>
     </header>
   );
