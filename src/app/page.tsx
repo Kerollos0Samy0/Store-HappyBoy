@@ -52,10 +52,17 @@ export default async function Home() {
 
       {/* Featured Products Placeholder */}
       <section className="max-w-7xl mx-auto py-16 px-4 w-full">
-        <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center relative">
-          <span className="bg-gray-50 px-6 relative z-10 border-b-4 border-[#4B9B9E] pb-2">وصل حديثاً</span>
+        <div className="relative mb-12 text-center flex justify-center">
           <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-200 -z-0"></div>
-        </h2>
+          <div className="bg-gray-50 px-6 relative z-10 flex gap-6 sm:gap-12 justify-center">
+            <button className="text-2xl sm:text-3xl font-bold text-gray-900 border-b-4 border-[#4B9B9E] pb-2 transition-colors cursor-default">
+              وصل حديثاً
+            </button>
+            <button className="text-2xl sm:text-3xl font-bold text-gray-400 border-b-4 border-transparent pb-2 hover:text-[#4B9B9E] hover:border-gray-300 transition-colors cursor-pointer">
+              الأكثر مبيعاً
+            </button>
+          </div>
+        </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {products.map((product) => (
