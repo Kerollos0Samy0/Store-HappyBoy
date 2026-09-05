@@ -106,7 +106,7 @@ export default function CartPage() {
             <h3 className="font-bold text-gray-900 mb-2">الخطوة الأخيرة (تأكيد الطلب)</h3>
             <p className="text-gray-600 mb-4 text-sm">برجاء التواصل معنا عبر الواتساب لتأكيد الطلب ودفع العربون للبدء في الشحن.</p>
             <a 
-              href="https://wa.me/201200093605" 
+              href="https://wa.me/201009516578" 
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-xl font-bold hover:bg-opacity-90 transition-all shadow-md"
