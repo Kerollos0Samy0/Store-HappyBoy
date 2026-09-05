@@ -3,34 +3,50 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "./CartProvider";
-import { ShoppingCart, X } from "lucide-react";
+import { ShoppingCart, X, Plus, Minus } from "lucide-react";
 
 export default function ProductCard({ product }: { product: any }) {
   const { addToCart } = useCart();
   const [showQuickAdd, setShowQuickAdd] = useState(false);
-  const [selectedColor, setSelectedColor] = useState("");
-  const [selectedSize, setSelectedSize] = useState("");
+  // Store quantities for each color: { "أحمر": 1, "أزرق": 2 }
+  const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
+
+  const piecesPerPack = product.sizes ? product.sizes.length : 1;
+
+  const updateQuantity = (color: string, delta: number) => {
+    setQuantities(prev => {
+      const current = prev[color] || 0;
+      const next = Math.max(0, current + delta);
+      return { ...prev, [color]: next };
+    });
+  };
 
   const handleQuickAdd = () => {
-    if (!selectedColor) return alert("برجاء اختيار اللون");
-    if (!selectedSize) return alert("برجاء اختيار المقاس");
+    const selectedColors = Object.entries(quantities).filter(([_, qty]) => qty > 0);
+    
+    if (selectedColors.length === 0) {
+      return alert("برجاء اختيار كمية للون واحد على الأقل");
+    }
 
-    addToCart({
-      id: `${product.id}-${selectedColor}-${selectedSize}`,
-      productId: product.id,
-      modelNumber: product.modelNumber,
-      name: product.name,
-      price: product.price,
-      color: selectedColor,
-      size: selectedSize,
-      quantity: 1,
+    selectedColors.forEach(([color, qty]) => {
+      addToCart({
+        id: `${product.id}-${color}-pack`,
+        productId: product.id,
+        modelNumber: product.modelNumber,
+        name: product.name,
+        price: product.price, // Assuming price is per piece? Or per pack? We'll leave it as price and they can confirm
+        color: color,
+        size: `ثري (${piecesPerPack} قطع)`,
+        quantity: qty, // quantity of packs
+      });
     });
     
     setShowQuickAdd(false);
-    setSelectedColor("");
-    setSelectedSize("");
-    alert("تم الإضافة للسلة!");
+    setQuantities({});
+    alert("تم إضافة الكميات للسلة بنجاح!");
   };
+
+  const totalSelectedPacks = Object.values(quantities).reduce((a, b) => a + b, 0);
 
   return (
     <div className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden group relative">
@@ -63,59 +79,62 @@ export default function ProductCard({ product }: { product: any }) {
 
       {/* Quick Add Modal Overlay */}
       {showQuickAdd && (
-        <div className="absolute inset-0 bg-white/95 z-10 p-5 flex flex-col backdrop-blur-sm transition-all">
+        <div className="absolute inset-0 bg-white/95 z-10 p-5 flex flex-col backdrop-blur-sm transition-all border-2 border-[#4B9B9E] rounded-2xl shadow-xl">
           <button 
-            onClick={() => setShowQuickAdd(false)}
-            className="absolute top-3 left-3 text-gray-500 hover:text-[#A3292E]"
+            onClick={() => { setShowQuickAdd(false); setQuantities({}); }}
+            className="absolute top-3 left-3 text-gray-500 hover:text-[#A3292E] bg-gray-100 rounded-full p-1"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
           
-          <h4 className="font-bold text-gray-900 mb-4 mt-2">إضافة السريع</h4>
+          <h4 className="font-bold text-gray-900 mb-2 mt-1">تحديد الكميات</h4>
           
-          <div className="flex-grow space-y-4 overflow-y-auto">
-            <div>
-              <p className="text-sm font-semibold mb-2 text-[#4B9B9E]">اللون:</p>
-              <div className="flex flex-wrap gap-2">
-                {(product.colors || []).map((c: any, i: number) => (
-                  <button
-                    key={i}
-                    onClick={() => setSelectedColor(c.name)}
-                    className={`px-3 py-1 text-sm rounded border ${
-                      selectedColor === c.name ? "bg-[#4B9B9E] text-white border-[#4B9B9E]" : "border-gray-300 text-gray-700"
-                    }`}
-                  >
-                    {c.name}
-                  </button>
+          {product.sizes && product.sizes.length > 0 && (
+            <div className="mb-4 bg-gray-50 p-2 rounded-lg border border-gray-200">
+              <p className="text-xs font-semibold text-gray-500 mb-1">المقاسات داخل الثري ({piecesPerPack} قطع):</p>
+              <div className="flex flex-wrap gap-1">
+                {product.sizes.map((s: string, i: number) => (
+                  <span key={i} className="text-xs bg-white border px-1.5 py-0.5 rounded text-gray-700">{s}</span>
                 ))}
               </div>
             </div>
-
-            {product.sizes && product.sizes.length > 0 && (
-              <div>
-                <p className="text-sm font-semibold mb-2 text-[#4B9B9E]">المقاس:</p>
-                <div className="flex flex-wrap gap-2">
-                  {product.sizes.map((s: string, i: number) => (
-                    <button
-                      key={i}
-                      onClick={() => setSelectedSize(s)}
-                      className={`w-10 h-10 flex items-center justify-center text-sm rounded border ${
-                        selectedSize === s ? "bg-[#A3292E] text-white border-[#A3292E]" : "border-gray-300 text-gray-700"
-                      }`}
+          )}
+          
+          <div className="flex-grow space-y-3 overflow-y-auto pr-1 custom-scrollbar">
+            <p className="text-sm font-semibold text-[#4B9B9E]">اختر الكمية (بالثري) لكل لون:</p>
+            
+            {(product.colors || []).map((c: any, i: number) => {
+              const qty = quantities[c.name] || 0;
+              return (
+                <div key={i} className={`flex items-center justify-between p-2 rounded-lg border ${qty > 0 ? 'border-[#4B9B9E] bg-teal-50' : 'border-gray-200 bg-white'}`}>
+                  <span className="font-medium text-sm text-gray-800">{c.name}</span>
+                  <div className="flex items-center gap-3">
+                    <button 
+                      onClick={() => updateQuantity(c.name, -1)}
+                      className={`w-7 h-7 flex items-center justify-center rounded-full ${qty > 0 ? 'bg-[#A3292E] text-white hover:bg-opacity-80' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+                      disabled={qty === 0}
                     >
-                      {s}
+                      <Minus className="w-4 h-4" />
                     </button>
-                  ))}
+                    <span className="font-bold w-4 text-center">{qty}</span>
+                    <button 
+                      onClick={() => updateQuantity(c.name, 1)}
+                      className="w-7 h-7 flex items-center justify-center rounded-full bg-[#4B9B9E] text-white hover:bg-opacity-80"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )
+            })}
           </div>
 
           <button 
             onClick={handleQuickAdd}
-            className="w-full bg-[#A3292E] text-white py-3 rounded-lg font-bold mt-4 hover:bg-opacity-90"
+            disabled={totalSelectedPacks === 0}
+            className={`w-full py-3 rounded-lg font-bold mt-4 transition-colors ${totalSelectedPacks > 0 ? 'bg-[#A3292E] text-white hover:bg-opacity-90 shadow-md' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
           >
-            أضف إلى السلة
+            أضف للسلة ({totalSelectedPacks} ثري)
           </button>
         </div>
       )}
