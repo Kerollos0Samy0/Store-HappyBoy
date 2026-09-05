@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
 import { useCart } from "./CartProvider";
@@ -71,8 +72,8 @@ export default function Header() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="text-2xl font-bold text-gray-900 tracking-tight">
-              Happy<span className="text-blue-600">Boy</span>
+            <Link href="/" className="flex items-center">
+              <Image src="/logo.png" alt="HappyBoy Logo" width={150} height={50} className="object-contain" />
             </Link>
           </div>
 
