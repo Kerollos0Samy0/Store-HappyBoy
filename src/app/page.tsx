@@ -30,17 +30,20 @@ export default async function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="bg-brand-teal text-white py-20 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+      <section className="relative bg-gray-900 text-white overflow-hidden">
+        {/* Brand Gradient Background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-teal to-brand-red opacity-90 z-0"></div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto text-center py-24 px-4 sm:py-32">
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight drop-shadow-md">
             مرحباً بك في متجر HappyBoy
           </h1>
-          <p className="text-xl md:text-2xl mb-10 text-teal-100">
+          <p className="text-xl md:text-2xl mb-10 text-white font-medium drop-shadow">
             أحدث وأفضل موديلات الملابس الولادي والبناتي بجودة لا تقارن
           </p>
           <Link 
             href="/category/winter/boys/middle" 
-            className="bg-brand-red text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-opacity-90 transition-all hover:scale-105 inline-block"
+            className="bg-white text-gray-900 font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:bg-gray-100 transition-all hover:scale-105 inline-block border-b-4 border-brand-red"
           >
             تسوق الكوليكشن الجديد الآن
           </Link>
@@ -50,7 +53,7 @@ export default async function Home() {
       {/* Featured Products Placeholder */}
       <section className="max-w-7xl mx-auto py-16 px-4 w-full">
         <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center relative">
-          <span className="bg-gray-50 px-4 relative z-10">وصل حديثاً</span>
+          <span className="bg-gray-50 px-6 relative z-10 border-b-4 border-brand-teal pb-2">وصل حديثاً</span>
           <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-200 -z-0"></div>
         </h2>
         

@@ -71,9 +71,9 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <div className="flex-shrink-0 flex items-center">
+          <div className="flex-shrink-0 flex items-center py-2">
             <Link href="/" className="flex items-center">
-              <Image src="/logo.png" alt="HappyBoy Logo" width={150} height={50} className="object-contain" />
+              <Image src="/logo.png" alt="HappyBoy Logo" width={180} height={60} className="object-contain max-h-16 mix-blend-multiply" />
             </Link>
           </div>
 
@@ -175,6 +175,12 @@ export default function Header() {
           </div>
         </div>
       )}
+
+      {/* The Two Brand Stripes */}
+      <div className="w-full flex flex-col">
+        <div className="h-1 w-full bg-brand-teal"></div>
+        <div className="h-1 w-full bg-brand-red mt-[1px]"></div>
+      </div>
     </header>
   );
 }
