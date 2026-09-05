@@ -2,6 +2,7 @@ import { initializeApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
 import Link from "next/link";
 import { use } from "react";
+import ProductCard from "@/components/ProductCard";
 
 // Initialize Firebase securely
 const firebaseConfig = {
@@ -98,30 +99,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug: stri
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {products.map((product) => (
-            <div key={product.id} className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden group">
-              <div className="h-64 bg-gray-100 relative overflow-hidden flex items-center justify-center">
-                <span className="text-gray-400">صورة الموديل {product.modelNumber}</span>
-              </div>
-              <div className="p-5">
-                <p className="text-sm text-blue-600 font-semibold mb-1">{product.modelNumber}</p>
-                <h3 className="text-lg font-bold text-gray-900 mb-2 truncate">{product.name}</h3>
-                
-                <div className="flex flex-wrap gap-1 mb-3">
-                  {(product.colors || []).map((c: any, i: number) => (
-                    <span key={i} className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600">
-                      {c.name}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-50">
-                  <span className="text-xl font-bold text-gray-900">{product.price} ج.م</span>
-                  <Link href={`/product/${product.id}`} className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors">
-                    التفاصيل
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       )}

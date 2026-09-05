@@ -1,20 +1,46 @@
 import Link from "next/link";
+import ProductCard from "@/components/ProductCard";
+import { initializeApp, getApps } from "firebase/app";
+import { getFirestore, collection, getDocs, query, limit } from "firebase/firestore";
 
-export default function Home() {
+// Initialize Firebase securely
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+};
+
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+const db = getFirestore(app);
+
+export const revalidate = 60;
+
+export default async function Home() {
+  const productsRef = collection(db, "products");
+  const q = query(productsRef, limit(8));
+  const snapshot = await getDocs(q);
+  const products: any[] = [];
+  snapshot.forEach((doc) => {
+    products.push({ id: doc.id, ...doc.data() });
+  });
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="bg-blue-600 text-white py-20 px-4">
+      <section className="bg-brand-teal text-white py-20 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
             مرحباً بك في متجر HappyBoy
           </h1>
-          <p className="text-xl md:text-2xl mb-10 text-blue-100">
+          <p className="text-xl md:text-2xl mb-10 text-teal-100">
             أحدث وأفضل موديلات الملابس الولادي والبناتي بجودة لا تقارن
           </p>
           <Link 
-            href="/category/winter" 
-            className="bg-white text-blue-600 font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-gray-100 transition-all hover:scale-105 inline-block"
+            href="/category/winter/boys/middle" 
+            className="bg-brand-red text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-opacity-90 transition-all hover:scale-105 inline-block"
           >
             تسوق الكوليكشن الجديد الآن
           </Link>
@@ -29,22 +55,8 @@ export default function Home() {
         </h2>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[1, 2, 3, 4].map((item) => (
-            <div key={item} className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden group">
-              <div className="h-64 bg-gray-200 relative overflow-hidden flex items-center justify-center">
-                <span className="text-gray-400">صورة الموديل</span>
-              </div>
-              <div className="p-5">
-                <p className="text-sm text-blue-600 font-semibold mb-1">شتوي - ولادي</p>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">سوت ولادي أنيق</h3>
-                <div className="flex justify-between items-center mt-4">
-                  <span className="text-xl font-bold text-gray-900">350 ج.م</span>
-                  <button className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors">
-                    التفاصيل
-                  </button>
-                </div>
-              </div>
-            </div>
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </section>
