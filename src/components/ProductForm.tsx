@@ -26,13 +26,16 @@ export default function ProductForm({ product }: { product: any }) {
     }
 
     selectedColors.forEach(([color, qty]) => {
+      const colorObj = product.colors?.find((c: any) => c.name === color);
+      
       addToCart({
         id: `${product.id}-${color}-pack`,
         productId: product.id,
         modelNumber: product.modelNumber,
         name: product.name,
-        price: product.price, // Again, assuming price is per piece/pack
+        price: product.price,
         color: color,
+        colorBarcode: colorObj?.barcode || "", // Added barcode
         size: `ثري (${piecesPerPack} قطع)`,
         quantity: qty,
       });

@@ -29,15 +29,19 @@ export default function ProductCard({ product }: { product: any }) {
     }
 
     selectedColors.forEach(([color, qty]) => {
+      // Find the corresponding color object to get the barcode
+      const colorObj = product.colors?.find((c: any) => c.name === color);
+      
       addToCart({
         id: `${product.id}-${color}-pack`,
         productId: product.id,
         modelNumber: product.modelNumber,
         name: product.name,
-        price: product.price, // Assuming price is per piece? Or per pack? We'll leave it as price and they can confirm
+        price: product.price,
         color: color,
+        colorBarcode: colorObj?.barcode || "", // Added barcode
         size: `ثري (${piecesPerPack} قطع)`,
-        quantity: qty, // quantity of packs
+        quantity: qty,
       });
     });
     
