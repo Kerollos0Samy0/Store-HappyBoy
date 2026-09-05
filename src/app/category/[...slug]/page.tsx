@@ -1,6 +1,7 @@
 import { initializeApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
 import Link from "next/link";
+import { use } from "react";
 
 // Initialize Firebase securely
 const firebaseConfig = {
@@ -20,11 +21,6 @@ export const revalidate = 60; // Revalidate every 60 seconds
 async function getProductsByCategory(slug: string[]) {
   const productsRef = collection(db, "products");
   let q;
-
-  // [...slug] maps to our URL structure
-  // winter/boys/baby -> ['winter', 'boys', 'baby']
-  // sports/middle -> ['sports', 'middle']
-  // summer/girls/junior -> ['summer', 'girls', 'junior']
 
   if (slug[0] === "winter") {
     const mainCat = slug[1] === "boys" ? "ولادي" : "بناتي";
@@ -84,7 +80,8 @@ function getCategoryTitle(slug: string[]) {
   return title;
 }
 
-export default async function CategoryPage({ params }: { params: { slug: string[] } }) {
+export default async function CategoryPage(props: { params: Promise<{ slug: string[] }> }) {
+  const params = await props.params;
   const products = await getProductsByCategory(params.slug);
   const title = getCategoryTitle(params.slug);
 
@@ -103,7 +100,6 @@ export default async function CategoryPage({ params }: { params: { slug: string[
           {products.map((product) => (
             <div key={product.id} className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden group">
               <div className="h-64 bg-gray-100 relative overflow-hidden flex items-center justify-center">
-                {/* Temporary Image Placeholder */}
                 <span className="text-gray-400">صورة الموديل {product.modelNumber}</span>
               </div>
               <div className="p-5">
@@ -112,7 +108,6 @@ export default async function CategoryPage({ params }: { params: { slug: string[
                 
                 <div className="flex flex-wrap gap-1 mb-3">
                   {(product.colors || []).map((c: any, i: number) => (
-                    // Only show colors that have positive quantity (or just show all for now to see them)
                     <span key={i} className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600">
                       {c.name}
                     </span>
