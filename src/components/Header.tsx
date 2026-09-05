@@ -78,7 +78,7 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8 space-x-reverse h-full">
+          <nav className="hidden md:flex flex-1 justify-center gap-8 lg:gap-16 h-full">
             {navigation.map((category) => (
               <div
                 key={category.title}
@@ -86,9 +86,9 @@ export default function Header() {
                 onMouseEnter={() => setActiveDropdown(category.title)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button className="flex items-center text-gray-700 hover:text-[#4B9B9E] font-medium px-3 py-2 text-lg transition-colors">
+                <button className="flex items-center text-gray-700 hover:text-[#4B9B9E] font-bold px-4 py-2 text-xl transition-colors tracking-wide">
                   {category.title}
-                  <ChevronDown className="ml-1 w-4 h-4" />
+                  <ChevronDown className="mr-2 w-5 h-5 text-[#A3292E]" />
                 </button>
 
                 {/* Mega Menu Dropdown */}
