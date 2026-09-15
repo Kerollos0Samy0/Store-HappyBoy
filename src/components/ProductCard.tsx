@@ -113,7 +113,7 @@ export default function ProductCard({ product }: { product: any }) {
           <div className="flex items-center gap-1.5 flex-wrap">
             <span className="text-xl font-bold text-[#A3292E]">{product.price} ج.م</span>
             {product.price && !isNaN(Number(product.price)) && (
-              <span className="text-sm font-bold text-gray-500" dir="ltr">${(Number(product.price) / 50).toFixed(2)}</span>
+              <span className="text-xl font-bold text-green-700" dir="ltr">${(Number(product.price) / 52.13).toFixed(2)}</span>
             )}
           </div>
           <button 
