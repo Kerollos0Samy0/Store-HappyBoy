@@ -110,7 +110,12 @@ export default function ProductCard({ product }: { product: any }) {
         </div>
 
         <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-50">
-          <span className="text-xl font-bold text-[#A3292E]">{product.price} ج.م</span>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-xl font-bold text-[#A3292E]">{product.price} ج.م</span>
+            {product.price && !isNaN(Number(product.price)) && (
+              <span className="text-sm font-bold text-gray-500" dir="ltr">${(Number(product.price) / 50).toFixed(2)}</span>
+            )}
+          </div>
           <button 
             onClick={() => setShowQuickAdd(true)}
             className="flex items-center gap-2 bg-[#4B9B9E] text-white px-4 py-2 rounded-lg font-semibold hover:bg-opacity-90 transition-colors"
