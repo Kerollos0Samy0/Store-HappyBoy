@@ -4,6 +4,14 @@ import { useState } from "react";
 export default function ColorsClient({ initialMapping, dbModels }: any) {
   const [mapping, setMapping] = useState(initialMapping);
 
+  const handleDeleteImage = (model: string, imgIdx: number) => {
+    if (!confirm("هل أنت متأكد من حذف هذه الصورة؟")) return;
+    const newMap = { ...mapping };
+    newMap[model].images.splice(imgIdx, 1);
+    // If no images left, maybe delete the model? Let's leave it empty.
+    setMapping(newMap);
+  };
+
   const handleColorChange = (model: string, imgIdx: number, color: string) => {
     const newMap = { ...mapping };
     newMap[model].images[imgIdx].color = color;
@@ -41,6 +49,7 @@ export default function ColorsClient({ initialMapping, dbModels }: any) {
                       <option value="">اختر اللوَ</option>
                       {colors.map((c: string) => <option key={c} value={c}>{c}</option>)}
                     </select>
+                    <button onClick={() => handleDeleteImage(model, idx)} className="mt-2 text-red-600 text-sm font-bold border border-red-200 rounded py-1 hover:bg-red-50 transition-colors">حذف الصورة</button>
                   </div>
                 ))}
               </div>
