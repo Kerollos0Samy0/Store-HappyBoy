@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
-import { ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ShoppingCart, Menu, X, ChevronDown, Eye } from "lucide-react";
 import { useCart } from "./CartProvider";
 
 const navigation = [
@@ -39,6 +39,40 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const { totalItems } = useCart();
+  const [visitCount, setVisitCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    import("firebase/app").then(async ({ initializeApp, getApps }) => {
+      const { getFirestore, doc, getDoc, setDoc, increment } = await import("firebase/firestore");
+      const firebaseConfig = {
+        apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+        authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+        storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+        appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+      };
+      const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+      const db = getFirestore(app);
+      const visitRef = doc(db, "counters", "visits");
+      
+      const countView = async () => {
+        try {
+          if (!sessionStorage.getItem("visited")) {
+            sessionStorage.setItem("visited", "true");
+            await setDoc(visitRef, { count: increment(1) }, { merge: true });
+          }
+          const snap = await getDoc(visitRef);
+          if (snap.exists()) {
+            setVisitCount(snap.data().count);
+          }
+        } catch(e) {
+          console.error("Error updating visit count:", e);
+        }
+      };
+      countView();
+    });
+  }, []);
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -90,8 +124,15 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Cart Icon */}
-          <div className="flex items-center space-x-4 space-x-reverse">
+          {/* Stats & Cart Icon */}
+          <div className="flex items-center space-x-6 space-x-reverse">
+            {visitCount !== null && (
+              <div className="flex items-center text-gray-500 text-sm gap-1.5 font-medium border border-gray-100 bg-gray-50 px-3 py-1.5 rounded-full" title="عدد زوار الموقع">
+                <Eye className="w-4 h-4" />
+                <span>{visitCount}</span>
+              </div>
+            )}
+            
             <Link href="/cart" className="relative text-gray-700 hover:text-[#4B9B9E] transition-colors p-2">
               <ShoppingCart className="w-6 h-6" />
               {totalItems > 0 && (
