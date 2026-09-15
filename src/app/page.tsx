@@ -43,19 +43,19 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
   }
 
   const combos = [
-    { c: "boys", s: "بيبي", label: "بيبي ولادي" },
-    { c: "boys", s: "وسط", label: "وسط ولادي" },
-    { c: "boys", s: "محير", label: "محير ولادي" },
-    { c: "girls", s: "بيبي", label: "بيبي بناتي" },
-    { c: "girls", s: "وسط", label: "وسط بناتي" },
-    { c: "girls", s: "محير", label: "محير بناتي" }
+    { c: "ولادي", s: "بيبي", label: "بيبي ولادي" },
+    { c: "ولادي", s: "وسط", label: "وسط ولادي" },
+    { c: "ولادي", s: "محير", label: "محير ولادي" },
+    { c: "بناتي", s: "بيبي", label: "بيبي بناتي" },
+    { c: "بناتي", s: "وسط", label: "وسط بناتي" },
+    { c: "بناتي", s: "محير", label: "محير بناتي" }
   ];
 
   let displayedProducts: any[] = [];
   let heroImages: string[] = [];
 
   combos.forEach(combo => {
-    const matches = allProducts.filter(p => p.category === combo.c && p.subCategory === combo.s);
+    const matches = allProducts.filter(p => p.mainCategory === combo.c && p.subCategory === combo.s);
     if (matches.length > 0 && matches[0].mainImage) {
       heroImages.push(matches[0].mainImage);
     }
