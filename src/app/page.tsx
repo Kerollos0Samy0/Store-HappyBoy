@@ -52,8 +52,6 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
   ];
 
   let displayedProducts: any[] = [];
-  const heroImages = [
-    "https://firebasestorage.googleapis.com/v0/b/happyboy01-39e92.firebasestorage.app/o/hero%2Fhappyboy-Ph12862.jpg?alt=media&token=b18eef9f-8423-4425-b888-711bc5efbb05", // Baby Boy
 
   return (
     <div className="flex flex-col min-h-screen">
