@@ -69,13 +69,13 @@ export default function ProductCard({ product }: { product: any }) {
               <>
                 <button 
                   onClick={(e) => { e.preventDefault(); e.stopPropagation(); setCurrentImgIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1)); }}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white p-1.5 rounded-full shadow-md opacity-0 group-hover/img:opacity-100 transition-opacity"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white p-1.5 rounded-full shadow-md opacity-100 md:opacity-0 md:group-hover/img:opacity-100 transition-opacity"
                 >
                   <ChevronRight className="w-5 h-5 text-gray-800" />
                 </button>
                 <button 
                   onClick={(e) => { e.preventDefault(); e.stopPropagation(); setCurrentImgIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0)); }}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white p-1.5 rounded-full shadow-md opacity-0 group-hover/img:opacity-100 transition-opacity"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white p-1.5 rounded-full shadow-md opacity-100 md:opacity-0 md:group-hover/img:opacity-100 transition-opacity"
                 >
                   <ChevronLeft className="w-5 h-5 text-gray-800" />
                 </button>
@@ -101,7 +101,7 @@ export default function ProductCard({ product }: { product: any }) {
               <button 
                 key={i} 
                 onClick={(e) => { e.preventDefault(); if (isSelectable) setCurrentImgIndex(imgIndex); }}
-                className={`text-xs px-2 py-1 rounded transition-colors ${isSelectable && currentImgIndex === imgIndex ? 'bg-[#4B9B9E] text-white font-bold shadow-sm' : (isSelectable ? 'bg-gray-100 text-gray-700 hover:bg-gray-200 cursor-pointer' : 'bg-gray-50 text-gray-400 cursor-default')}`}
+                className={`text-sm px-3 py-1.5 rounded-lg transition-colors ${isSelectable && currentImgIndex === imgIndex ? 'bg-[#4B9B9E] text-white font-bold shadow-sm' : (isSelectable ? 'bg-gray-100 text-gray-700 hover:bg-gray-200 cursor-pointer' : 'bg-gray-50 text-gray-400 cursor-default')}`}
               >
                 {c.name}
               </button>
@@ -118,7 +118,7 @@ export default function ProductCard({ product }: { product: any }) {
           </div>
           <button 
             onClick={() => setShowQuickAdd(true)}
-            className="flex items-center gap-2 bg-[#4B9B9E] text-white px-4 py-2 rounded-lg font-semibold hover:bg-opacity-90 transition-colors"
+            className="flex items-center gap-2 bg-[#4B9B9E] text-white px-6 py-2.5 rounded-xl font-bold text-lg hover:bg-opacity-90 transition-colors"
           >
             <ShoppingCart className="w-4 h-4" />
             شراء
@@ -160,7 +160,7 @@ export default function ProductCard({ product }: { product: any }) {
                   <div className="flex items-center gap-3">
                     <button 
                       onClick={() => updateQuantity(c.name, -1)}
-                      className={`w-7 h-7 flex items-center justify-center rounded-full ${qty > 0 ? 'bg-[#A3292E] text-white hover:bg-opacity-80' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+                      className={`w-9 h-9 flex items-center justify-center rounded-full ${qty > 0 ? 'bg-[#A3292E] text-white hover:bg-opacity-80' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
                       disabled={qty === 0}
                     >
                       <Minus className="w-4 h-4" />
@@ -168,7 +168,7 @@ export default function ProductCard({ product }: { product: any }) {
                     <span className="font-bold w-4 text-center">{qty}</span>
                     <button 
                       onClick={() => updateQuantity(c.name, 1)}
-                      className="w-7 h-7 flex items-center justify-center rounded-full bg-[#4B9B9E] text-white hover:bg-opacity-80"
+                      className="w-9 h-9 flex items-center justify-center rounded-full bg-[#4B9B9E] text-white hover:bg-opacity-80"
                     >
                       <Plus className="w-4 h-4" />
                     </button>

@@ -153,7 +153,7 @@ export default function CartPage() {
                       </div>
                     </div>
                     <div className="flex flex-col items-end gap-3">
-                      <p className="text-[#A3292E] font-bold text-lg">{item.price} ج.م</p>
+                      <div className="flex flex-col items-end"><p className="text-[#A3292E] font-bold text-lg">{item.price} ج.م</p><p className="text-gray-400 font-bold text-xs" dir="ltr">${(Number(item.price) / 50).toFixed(2)}</p></div>
                       <button
                         onClick={() => removeFromCart(item.id)}
                         className="text-red-500 text-sm font-semibold hover:text-white hover:bg-red-500 px-3 py-1 rounded transition-colors border border-red-500"
@@ -169,7 +169,7 @@ export default function CartPage() {
                   <span className="text-gray-700 font-bold block">الإجمالي:</span>
                   <span className="text-sm text-gray-500">عدد الثريهات: {totalPacks}</span>
                 </div>
-                <span className="text-3xl font-black text-[#A3292E]">{totalPrice} ج.م</span>
+                <div className="flex flex-col items-end"><span className="text-3xl font-black text-[#A3292E]">{totalPrice} ج.م</span><span className="text-gray-500 font-bold text-sm" dir="ltr">${(Number(totalPrice) / 50).toFixed(2)}</span></div>
               </div>
             </div>
           </div>
