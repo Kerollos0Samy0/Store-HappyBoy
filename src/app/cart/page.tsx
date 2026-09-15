@@ -77,7 +77,8 @@ export default function CartPage() {
           quantity: item.quantity,
           price: item.price
         })),
-        source: "Store"
+        source: "Store",
+        branch: "العبور"
       };
 
       await addDoc(collection(db, "orders"), order);

@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import Image from "next/image";
 import ProductCard from "@/components/ProductCard";
 import { initializeApp, getApps } from "firebase/app";
@@ -52,8 +52,15 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
   ];
 
   let displayedProducts: any[] = [];
-  const heroImages = ["https://firebasestorage.googleapis.com/v0/b/happyboy01-39e92.firebasestorage.app/o/hero%2Fhappyboy-Ph11756.jpg?alt=media&token=c2530200-df9b-4693-8965-67ca6a857ddb","https://firebasestorage.googleapis.com/v0/b/happyboy01-39e92.firebasestorage.app/o/hero%2Fhappyboy-Ph11917.jpg?alt=media&token=d8242f5a-6728-4667-a144-3667d08a01c8","https://firebasestorage.googleapis.com/v0/b/happyboy01-39e92.firebasestorage.app/o/hero%2Fhappyboy-Ph12862.jpg?alt=media&token=b18eef9f-8423-4425-b888-711bc5efbb05","https://firebasestorage.googleapis.com/v0/b/happyboy01-39e92.firebasestorage.app/o/hero%2Fhappyboy-Ph13081.jpg?alt=media&token=fe83cf80-67c1-4c57-a819-92edf389634a","https://firebasestorage.googleapis.com/v0/b/happyboy01-39e92.firebasestorage.app/o/hero%2Fhappyboy-Ph13696.jpg?alt=media&token=9d2f0758-3553-4e1f-812b-c83e99ad79df","https://firebasestorage.googleapis.com/v0/b/happyboy01-39e92.firebasestorage.app/o/hero%2Fhappyboy-Ph14053.jpg?alt=media&token=e001c900-81f1-4274-881b-e694f0471f87"];
-  const savedOffsets = [-25, -15, -15, -25, -15, -5];
+  const heroImages = [
+    "https://firebasestorage.googleapis.com/v0/b/happyboy01-39e92.firebasestorage.app/o/hero%2Fhappyboy-Ph13081.jpg?alt=media&token=fe83cf80-67c1-4c57-a819-92edf389634a",
+    "https://firebasestorage.googleapis.com/v0/b/happyboy01-39e92.firebasestorage.app/o/hero%2Fhappyboy-Ph14053.jpg?alt=media&token=e001c900-81f1-4274-881b-e694f0471f87",
+    "https://firebasestorage.googleapis.com/v0/b/happyboy01-39e92.firebasestorage.app/o/hero%2Fhappyboy-Ph13696.jpg?alt=media&token=9d2f0758-3553-4e1f-812b-c83e99ad79df",
+    "https://firebasestorage.googleapis.com/v0/b/happyboy01-39e92.firebasestorage.app/o/hero%2Fhappyboy-Ph12862.jpg?alt=media&token=b18eef9f-8423-4425-b888-711bc5efbb05",
+    "https://firebasestorage.googleapis.com/v0/b/happyboy01-39e92.firebasestorage.app/o/hero%2Fhappyboy-Ph11756.jpg?alt=media&token=c2530200-df9b-4693-8965-67ca6a857ddb",
+    "https://firebasestorage.googleapis.com/v0/b/happyboy01-39e92.firebasestorage.app/o/hero%2Fhappyboy-Ph11917.jpg?alt=media&token=d8242f5a-6728-4667-a144-3667d08a01c8"
+  ];
+  const savedOffsets = [-25, -5, -15, -15, -25, -15];
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -99,45 +106,7 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="max-w-7xl mx-auto py-16 px-4 w-full">
-        <div className="relative mb-12 text-center flex justify-center">
-          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-200 -z-0"></div>
-          <div className="bg-gray-50 px-6 relative z-10 flex gap-6 sm:gap-12 justify-center">
-            <Link 
-              href="/?tab=new"
-              scroll={false}
-              className={`text-2xl sm:text-3xl font-bold pb-2 transition-colors ${
-                activeTab !== "best" 
-                  ? "text-gray-900 border-b-4 border-[#4B9B9E] cursor-default" 
-                  : "text-gray-400 border-b-4 border-transparent hover:text-[#4B9B9E] hover:border-gray-300"
-              }`}
-            >
-              وصل حديثاً
-            </Link>
-            <Link 
-              href="/?tab=best"
-              scroll={false}
-              className={`text-2xl sm:text-3xl font-bold pb-2 transition-colors ${
-                activeTab === "best" 
-                  ? "text-gray-900 border-b-4 border-[#4B9B9E] cursor-default" 
-                  : "text-gray-400 border-b-4 border-transparent hover:text-[#4B9B9E] hover:border-gray-300"
-              }`}
-            >
-              الأكثر مبيعاً
-            </Link>
-          </div>
-        </div>
-        
-        {/* Group the products by category label visually */}
-        <div className="space-y-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 min-h-[400px]">
-            {displayedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        </div>
-      </section>
+
     </div>
   );
 }

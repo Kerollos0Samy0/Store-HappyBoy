@@ -44,12 +44,12 @@ export default function Header() {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <div className="flex-shrink-0 flex items-center py-2">
-            <Link href="/" className="flex items-center hover:opacity-80 transition-opacity cursor-pointer">
-              <Image src="/logo.png" alt="HappyBoy Logo" width={200} height={70} className="object-contain max-h-20 mix-blend-multiply" />
-            </Link>
-          </div>
+            {/* Logo */}
+            <div className="flex-shrink-0 flex items-center py-2">
+              <Link href="/" className="flex items-center hover:opacity-80 transition-opacity cursor-pointer">
+                <Image src="/logo.svg" alt="HappyBoy Logo" width={200} height={70} className="object-contain max-h-20" />
+              </Link>
+            </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex flex-1 justify-center gap-8 lg:gap-16 h-full">
