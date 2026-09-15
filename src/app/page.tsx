@@ -55,7 +55,7 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
   let heroImages: string[] = [];
 
   combos.forEach(combo => {
-    const matches = allProducts.filter(p => p.mainCategory === combo.c && p.subCategory === combo.s);
+    const matches = allProducts.filter(p => p.mainCategory === combo.c && p.subCategory === combo.s && p.mainImage);
     if (matches.length > 0 && matches[0].mainImage) {
       heroImages.push(matches[0].mainImage);
     }
