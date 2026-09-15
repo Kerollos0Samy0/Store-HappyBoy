@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "./CartProvider";
-import { ShoppingCart, X, Plus, Minus, ChevronRight, ChevronLeft } from "lucide-react";
+import { ShoppingCart, X, Plus, Minus, ChevronRight, ChevronLeft, ZoomIn } from "lucide-react";
 
 export default function ProductCard({ product }: { product: any }) {
   const { addToCart } = useCart();
   const [showQuickAdd, setShowQuickAdd] = useState(false);
+  const [lightbox, setLightbox] = useState<string | null>(null);
   // Store quantities for each color: { "أحمر": 1, "أزرق": 2 }
   const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
   const colorKeys = product.colorImages ? Object.keys(product.colorImages) : [];
@@ -17,6 +18,22 @@ export default function ProductCard({ product }: { product: any }) {
     return urls.map(url => ({ color: k, url }));
   }) : (product.mainImage ? [{ color: 'main', url: product.mainImage }] : []);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightbox(null);
+      if (e.key === 'ArrowRight' && lightbox) {
+        const idx = images.findIndex(img => img.url === lightbox);
+        if (idx > 0) setLightbox(images[idx - 1].url);
+      }
+      if (e.key === 'ArrowLeft' && lightbox) {
+        const idx = images.findIndex(img => img.url === lightbox);
+        if (idx < images.length - 1) setLightbox(images[idx + 1].url);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [lightbox, images]);
 
   const piecesPerPack = product.sizes ? product.sizes.length : 1;
 
@@ -60,20 +77,88 @@ export default function ProductCard({ product }: { product: any }) {
   const totalSelectedPacks = Object.values(quantities).reduce((a, b) => a + b, 0);
 
   return (
+    <>
+    {/* Lightbox Modal */}
+    {lightbox && (
+      <div
+        className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
+        onClick={() => setLightbox(null)}
+      >
+        <button
+          onClick={() => setLightbox(null)}
+          className="absolute top-4 right-4 bg-white/20 hover:bg-white/40 text-white rounded-full p-2 z-10"
+        >
+          <X className="w-7 h-7" />
+        </button>
+        {/* Prev */}
+        {images.length > 1 && (() => {
+          const idx = images.findIndex(img => img.url === lightbox);
+          return idx > 0 ? (
+            <button
+              onClick={(e) => { e.stopPropagation(); setLightbox(images[idx - 1].url); }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full p-3 z-10"
+            >
+              <ChevronRight className="w-8 h-8" />
+            </button>
+          ) : null;
+        })()}
+        {/* Next */}
+        {images.length > 1 && (() => {
+          const idx = images.findIndex(img => img.url === lightbox);
+          return idx < images.length - 1 ? (
+            <button
+              onClick={(e) => { e.stopPropagation(); setLightbox(images[idx + 1].url); }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full p-3 z-10"
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+          ) : null;
+        })()}
+        <div
+          className="relative max-w-4xl max-h-[90vh] w-full h-full"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <img
+            src={lightbox}
+            alt=""
+            className="w-full h-full object-contain"
+          />
+        </div>
+        {/* Color label */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-1.5 rounded-full text-sm">
+          {images.find(img => img.url === lightbox)?.color}
+        </div>
+      </div>
+    )}
+
     <div className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden group relative">
       <div className="h-96 bg-gray-100 relative overflow-hidden flex items-center justify-center group/img">
         {images.length > 0 ? (
           <>
-            <Image src={images[currentImgIndex]?.url} alt={product.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" className="object-cover" />
+            <Image
+              src={images[currentImgIndex]?.url}
+              alt={product.name}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              className="object-cover cursor-zoom-in"
+              onClick={() => setLightbox(images[currentImgIndex].url)}
+            />
+            {/* Zoom hint */}
+            <button
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setLightbox(images[currentImgIndex].url); }}
+              className="absolute top-2 right-2 bg-black/40 hover:bg-black/70 text-white rounded-full p-1.5 opacity-0 group-hover/img:opacity-100 transition-opacity"
+            >
+              <ZoomIn className="w-4 h-4" />
+            </button>
             {images.length > 1 && (
               <>
-                <button 
+                <button
                   onClick={(e) => { e.preventDefault(); e.stopPropagation(); setCurrentImgIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1)); }}
                   className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white p-1.5 rounded-full shadow-md opacity-100 md:opacity-0 md:group-hover/img:opacity-100 transition-opacity"
                 >
                   <ChevronRight className="w-5 h-5 text-gray-800" />
                 </button>
-                <button 
+                <button
                   onClick={(e) => { e.preventDefault(); e.stopPropagation(); setCurrentImgIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0)); }}
                   className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white p-1.5 rounded-full shadow-md opacity-100 md:opacity-0 md:group-hover/img:opacity-100 transition-opacity"
                 >
@@ -188,5 +273,6 @@ export default function ProductCard({ product }: { product: any }) {
         </div>
       )}
     </div>
+    </>
   );
 }
