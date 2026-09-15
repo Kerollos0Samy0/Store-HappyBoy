@@ -12,7 +12,10 @@ export default function ProductCard({ product }: { product: any }) {
   // Store quantities for each color: { "أحمر": 1, "أزرق": 2 }
   const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
   const colorKeys = product.colorImages ? Object.keys(product.colorImages) : [];
-  const images = colorKeys.length > 0 ? colorKeys.map(k => ({ color: k, url: product.colorImages[k] })) : (product.mainImage ? [{ color: 'main', url: product.mainImage }] : []);
+  const images = colorKeys.length > 0 ? colorKeys.flatMap(k => {
+    const urls = Array.isArray(product.colorImages[k]) ? product.colorImages[k] : [product.colorImages[k]];
+    return urls.map(url => ({ color: k, url }));
+  }) : (product.mainImage ? [{ color: 'main', url: product.mainImage }] : []);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
 
   const piecesPerPack = product.sizes ? product.sizes.length : 1;
