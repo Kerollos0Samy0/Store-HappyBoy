@@ -23,7 +23,12 @@ export default function HeroAdminClient({ initialImages, initialLabels, initialO
   const handleSave = async () => {
     setSaving(true);
     try {
-      await setDoc(doc(db, "settings", "hero"), { offsets });
+      const res = await fetch("/api/save-hero-settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ offsets })
+      });
+      if (!res.ok) throw new Error("Failed to save");
       alert("تم الحفظ بنجاح!");
     } catch(e) {
       alert("حدث خطأ أثناء الحفظ");
