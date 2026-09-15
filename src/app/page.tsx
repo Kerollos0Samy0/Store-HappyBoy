@@ -59,12 +59,20 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
           <p className="text-xl md:text-2xl mb-10 text-white font-medium drop-shadow">
             أحدث كولكشن ملابس الأطفال ولادي وبناتي بأعلى خامة وأفضل سعر
           </p>
-          <Link 
-            href="/category/boys/middle" 
-            className="bg-white text-gray-900 font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:bg-gray-100 transition-all hover:scale-105 inline-block border-b-4 border-[#A3292E]"
-          >
-            تسوق الكوليكشن الآن
-          </Link>
+          <div className="flex flex-wrap justify-center gap-4 mt-6">
+            <Link 
+              href="/category/boys/middle" 
+              className="bg-white text-gray-900 font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:bg-gray-100 transition-all hover:scale-105 inline-block border-b-4 border-[#4B9B9E]"
+            >
+              تسوق ولادي
+            </Link>
+            <Link 
+              href="/category/girls/middle" 
+              className="bg-white text-gray-900 font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:bg-gray-100 transition-all hover:scale-105 inline-block border-b-4 border-[#A3292E]"
+            >
+              تسوق بناتي
+            </Link>
+          </div>
         </div>
       </section>
 
