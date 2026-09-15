@@ -54,10 +54,10 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
             أحدث كولكشن ملابس الأطفال ولادي وبناتي بأعلى خامة وأفضل سعر
           </p>
           <Link 
-            href="/category/winter/boys/middle" 
+            href="/category/boys/middle" 
             className="bg-white text-gray-900 font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:bg-gray-100 transition-all hover:scale-105 inline-block border-b-4 border-[#A3292E]"
           >
-            تسوق كوليكشن الشتاء الآن
+            تسوق الكوليكشن الآن
           </Link>
         </div>
       </section>

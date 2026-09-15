@@ -23,33 +23,17 @@ async function getProductsByCategory(slug: string[]) {
   const productsRef = collection(db, "products");
   let q;
 
-  if (slug[0] === "winter") {
-    const mainCat = slug[1] === "boys" ? "ولادي" : "بناتي";
+  if (slug[0] === "boys" || slug[0] === "girls") {
+    const mainCat = slug[0] === "boys" ? "ولادي" : "بناتي";
     let subCat = "";
-    if (slug[2] === "baby") subCat = "بيبي";
-    if (slug[2] === "middle") subCat = "وسط";
-    if (slug[2] === "junior") subCat = "محير";
+    if (slug[1] === "baby") subCat = "بيبي";
+    if (slug[1] === "middle") subCat = "وسط";
+    if (slug[1] === "junior") subCat = "محير";
 
     q = query(
       productsRef,
       where("mainCategory", "==", mainCat),
       where("subCategory", "==", subCat)
-    );
-  } else if (slug[0] === "sports") {
-    const subCat = slug[1] === "middle" ? "وسط" : "محير";
-    q = query(
-      productsRef,
-      where("mainCategory", "==", "رياضي"),
-      where("subCategory", "==", subCat)
-    );
-  } else if (slug[0] === "summer") {
-    const gender = slug[1] === "boys" ? "ولادي" : "بناتي";
-    const subCat = slug[2] === "middle" ? "وسط" : "محير";
-    q = query(
-      productsRef,
-      where("mainCategory", "==", "سمر ميلتون"),
-      where("subCategory", "==", subCat),
-      where("gender", "==", gender)
     );
   } else {
     return [];
@@ -66,12 +50,9 @@ async function getProductsByCategory(slug: string[]) {
 
 function getCategoryTitle(slug: string[]) {
   let title = "";
-  if (slug[0] === "winter") title += "شتوي ";
-  if (slug[0] === "sports") title += "رياضي ";
-  if (slug[0] === "summer") title += "سمر ميلتون ";
 
-  if (slug[1] === "boys") title += "- ولادي ";
-  if (slug[1] === "girls") title += "- بناتي ";
+  if (slug[0] === "boys") title += "ولادي ";
+  if (slug[0] === "girls") title += "بناتي ";
 
   const last = slug[slug.length - 1];
   if (last === "baby") title += "- بيبي";

@@ -8,53 +8,27 @@ import { useCart } from "./CartProvider";
 
 const navigation = [
   {
-    title: "شتوي",
+    title: "اولادي",
     subcategories: [
       {
         title: "اولادي",
         links: [
-          { name: "بيبي", href: "/category/winter/boys/baby" },
-          { name: "وسط", href: "/category/winter/boys/middle" },
-          { name: "محير", href: "/category/winter/boys/junior" },
-        ],
-      },
-      {
-        title: "بناتي",
-        links: [
-          { name: "بيبي", href: "/category/winter/girls/baby" },
-          { name: "وسط", href: "/category/winter/girls/middle" },
-          { name: "محير", href: "/category/winter/girls/junior" },
+          { name: "بيبي", href: "/category/boys/baby" },
+          { name: "وسط", href: "/category/boys/middle" },
+          { name: "محير", href: "/category/boys/junior" },
         ],
       },
     ],
   },
   {
-    title: "رياضي",
+    title: "بناتي",
     subcategories: [
-      {
-        title: "رياضي",
-        links: [
-          { name: "وسط", href: "/category/sports/middle" },
-          { name: "محير", href: "/category/sports/junior" },
-        ],
-      },
-    ],
-  },
-  {
-    title: "سمر ميلتون",
-    subcategories: [
-      {
-        title: "اولادي",
-        links: [
-          { name: "وسط", href: "/category/summer/boys/middle" },
-          { name: "محير", href: "/category/summer/boys/junior" },
-        ],
-      },
       {
         title: "بناتي",
         links: [
-          { name: "وسط", href: "/category/summer/girls/middle" },
-          { name: "محير", href: "/category/summer/girls/junior" },
+          { name: "بيبي", href: "/category/girls/baby" },
+          { name: "وسط", href: "/category/girls/middle" },
+          { name: "محير", href: "/category/girls/junior" },
         ],
       },
     ],
@@ -96,12 +70,7 @@ export default function Header() {
                   <div className="absolute top-20 right-0 w-max bg-white shadow-xl rounded-b-xl border-t-2 border-[#4B9B9E] grid grid-cols-2 gap-8 p-6 transition-all duration-200">
                     {category.subcategories.map((sub) => (
                       <div key={sub.title} className="flex flex-col">
-                        {category.title !== "رياضي" && (
-                          <h3 className="font-bold text-gray-900 mb-3 border-b pb-2">
-                            {sub.title}
-                          </h3>
-                        )}
-                        <ul className="space-y-2">
+                        <ul className="space-y-2 mt-2">
                           {sub.links.map((link) => (
                             <li key={link.name}>
                               <Link
@@ -151,10 +120,7 @@ export default function Header() {
               <div key={category.title} className="space-y-2">
                 <h3 className="font-bold text-gray-900 text-lg border-b pb-2 mt-4">{category.title}</h3>
                 {category.subcategories.map((sub) => (
-                  <div key={sub.title} className="pl-4 border-r-2 border-gray-100 pr-4">
-                    {category.title !== "رياضي" && (
-                      <h4 className="font-semibold text-gray-700 mt-2 mb-1">{sub.title}</h4>
-                    )}
+                  <div key={sub.title} className="pl-4 border-r-2 border-gray-100 pr-4 mt-2">
                     <ul className="space-y-2">
                       {sub.links.map((link) => (
                          <li key={link.name}>
