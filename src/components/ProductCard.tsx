@@ -55,7 +55,12 @@ export default function ProductCard({ product }: { product: any }) {
   return (
     <div className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden group relative">
       <div className="h-64 bg-gray-100 relative overflow-hidden flex items-center justify-center">
-        <span className="text-gray-400">صورة الموديل {product.modelNumber}</span>
+        {product.mainImage ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={product.mainImage} alt={product.name} className="object-cover w-full h-full" />
+        ) : (
+          <span className="text-gray-400">صورة الموديل {product.modelNumber}</span>
+        )}
       </div>
       <div className="p-5">
         <p className="text-sm text-[#4B9B9E] font-semibold mb-1">{product.modelNumber}</p>
