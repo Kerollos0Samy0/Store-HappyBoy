@@ -59,7 +59,7 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
       <section className="relative bg-gray-900 text-white overflow-hidden min-h-screen flex items-center justify-center">
         {/* Dynamic Images Background */}
         <div className="absolute inset-0 z-0">
-          <Image src="/hero-all.png" alt="HappyBoy Hero" fill unoptimized quality={100} priority className="object-cover object-top opacity-95" />
+          <Image src="/hero-all2.png" alt="HappyBoy Hero" fill unoptimized quality={100} priority className="object-cover object-top opacity-95" />
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto text-center py-24 px-4">
