@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useCart } from "./CartProvider";
 import { ShoppingCart, X, Plus, Minus, ChevronRight, ChevronLeft } from "lucide-react";
 
@@ -60,8 +61,7 @@ export default function ProductCard({ product }: { product: any }) {
       <div className="h-96 bg-gray-100 relative overflow-hidden flex items-center justify-center group/img">
         {images.length > 0 ? (
           <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={images[currentImgIndex]?.url} alt={product.name} className="object-cover w-full h-full" />
+            <Image src={images[currentImgIndex]?.url} alt={product.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" className="object-cover" />
             {images.length > 1 && (
               <>
                 <button 

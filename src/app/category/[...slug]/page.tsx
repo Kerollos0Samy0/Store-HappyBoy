@@ -54,7 +54,7 @@ async function getProductsByCategory(slug: string[]) {
   });
 
   if (slug[1] === "all") {
-    const order: any = { "بيبي": 1, "محير": 2, "وسط": 3 };
+    const order: any = { "بيبي": 1, "وسط": 2, "محير": 3 };
     products.sort((a, b) => (order[a.subCategory] || 99) - (order[b.subCategory] || 99));
   }
 
