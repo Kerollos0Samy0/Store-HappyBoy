@@ -37,7 +37,7 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
   let products: any[] = [];
   snapshot.forEach((doc) => {
     const data = doc.data();
-    if (Number(data.modelNumber) <= 1000) {
+    if (Number(data.modelNumber) < 1000) {
       products.push({ id: doc.id, ...data });
     }
   });
