@@ -30,14 +30,20 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
   const q = query(
     productsRef, 
     orderBy("modelNumber", activeTab === "best" ? "asc" : "desc"), 
-    limit(8)
+    limit(50)
   );
   
   const snapshot = await getDocs(q);
-  const products: any[] = [];
+  let products: any[] = [];
   snapshot.forEach((doc) => {
-    products.push({ id: doc.id, ...doc.data() });
+    const data = doc.data();
+    if (Number(data.modelNumber) <= 1000) {
+      products.push({ id: doc.id, ...data });
+    }
   });
+
+  // Limit to 8 after filtering
+  products = products.slice(0, 8);
 
   return (
     <div className="flex flex-col min-h-screen">

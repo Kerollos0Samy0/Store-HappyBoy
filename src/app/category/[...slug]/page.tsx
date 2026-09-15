@@ -42,7 +42,10 @@ async function getProductsByCategory(slug: string[]) {
   const snapshot = await getDocs(q);
   const products: any[] = [];
   snapshot.forEach((doc) => {
-    products.push({ id: doc.id, ...doc.data() });
+    const data = doc.data();
+    if (Number(data.modelNumber) <= 1000) {
+      products.push({ id: doc.id, ...data });
+    }
   });
 
   return products;
