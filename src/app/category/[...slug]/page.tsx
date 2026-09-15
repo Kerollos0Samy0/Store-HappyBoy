@@ -25,16 +25,21 @@ async function getProductsByCategory(slug: string[]) {
 
   if (slug[0] === "boys" || slug[0] === "girls") {
     const mainCat = slug[0] === "boys" ? "ولادي" : "بناتي";
-    let subCat = "";
-    if (slug[1] === "baby") subCat = "بيبي";
-    if (slug[1] === "middle") subCat = "وسط";
-    if (slug[1] === "junior") subCat = "محير";
+    
+    if (slug[1] === "all") {
+      q = query(productsRef, where("mainCategory", "==", mainCat));
+    } else {
+      let subCat = "";
+      if (slug[1] === "baby") subCat = "بيبي";
+      if (slug[1] === "middle") subCat = "وسط";
+      if (slug[1] === "junior") subCat = "محير";
 
-    q = query(
-      productsRef,
-      where("mainCategory", "==", mainCat),
-      where("subCategory", "==", subCat)
-    );
+      q = query(
+        productsRef,
+        where("mainCategory", "==", mainCat),
+        where("subCategory", "==", subCat)
+      );
+    }
   } else {
     return [];
   }
@@ -47,6 +52,11 @@ async function getProductsByCategory(slug: string[]) {
       products.push({ id: doc.id, ...data });
     }
   });
+
+  if (slug[1] === "all") {
+    const order: any = { "بيبي": 1, "محير": 2, "وسط": 3 };
+    products.sort((a, b) => (order[a.subCategory] || 99) - (order[b.subCategory] || 99));
+  }
 
   return products;
 }
@@ -61,6 +71,7 @@ function getCategoryTitle(slug: string[]) {
   if (last === "baby") title += "- بيبي";
   if (last === "middle") title += "- وسط";
   if (last === "junior") title += "- محير";
+  if (last === "all") title += "- جميع المقاسات";
 
   return title;
 }

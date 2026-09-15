@@ -61,13 +61,13 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-6">
             <Link 
-              href="/category/boys/middle" 
+              href="/category/boys/all" 
               className="bg-white text-gray-900 font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:bg-gray-100 transition-all hover:scale-105 inline-block border-b-4 border-[#4B9B9E]"
             >
               تسوق ولادي
             </Link>
             <Link 
-              href="/category/girls/middle" 
+              href="/category/girls/all" 
               className="bg-white text-gray-900 font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:bg-gray-100 transition-all hover:scale-105 inline-block border-b-4 border-[#A3292E]"
             >
               تسوق بناتي
