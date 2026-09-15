@@ -87,7 +87,7 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
               <div key={i} className="flex-1 h-full relative overflow-hidden">
                 {/* Dynamic left offset to align models */}
                 <div className="absolute -inset-x-4 inset-y-0 h-full">
-                  <Image src={img} alt="Hero" fill sizes="16vw" className="object-cover object-top opacity-95" />
+                  <Image src={img} alt="Hero" fill sizes="(max-width: 768px) 100vw, 16vw" quality={100} priority className="object-cover object-top opacity-95" />
                 </div>
               </div>
             ))
