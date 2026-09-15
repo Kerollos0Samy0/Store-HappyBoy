@@ -78,7 +78,7 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
             heroImages.map((img, i) => (
               <div key={i} className={`flex-1 h-full relative overflow-hidden ${i < heroImages.length - 1 ? 'border-r-4 border-white/30' : ''}`}>
                 <div className="absolute inset-0 w-[150%] -left-[25%] h-full skew-x-[20deg]">
-                  <Image src={img} alt="Hero" fill sizes="16vw" className="object-cover opacity-40 mix-blend-luminosity brightness-75 transition-transform duration-1000 hover:scale-110 hover:opacity-70 hover:mix-blend-normal" />
+                  <Image src={img} alt="Hero" fill sizes="16vw" className="object-cover object-top opacity-40 mix-blend-luminosity brightness-75 transition-transform duration-1000 hover:scale-110 hover:opacity-70 hover:mix-blend-normal" />
                 </div>
               </div>
             ))
