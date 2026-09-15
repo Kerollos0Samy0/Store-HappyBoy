@@ -83,10 +83,16 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto text-center py-24 px-4">
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
+          <h1 
+            className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight text-white"
+            style={{ textShadow: "2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 2px 0 0 #000, -2px 0 0 #000, 4px 4px 8px rgba(0,0,0,0.8)" }}
+          >
             أناقة طفلك تبدأ من هنا HappyBoy
           </h1>
-          <p className="text-xl md:text-2xl mb-10 text-white font-bold drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] max-w-3xl mx-auto">
+          <p 
+            className="text-xl md:text-2xl mb-10 text-white font-bold max-w-3xl mx-auto"
+            style={{ textShadow: "1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 0 1.5px 0 #000, 0 -1.5px 0 #000, 1.5px 0 0 #000, -1.5px 0 0 #000, 3px 3px 6px rgba(0,0,0,0.8)" }}
+          >
             أحدث كولكشن ملابس الأطفال ولادي وبناتي بأعلى خامة وأفضل سعر
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-6">
