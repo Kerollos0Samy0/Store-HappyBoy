@@ -79,15 +79,15 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gray-900 text-white overflow-hidden min-h-[500px] flex items-center justify-center">
+      <section className="relative bg-gray-900 text-white overflow-hidden min-h-[600px] md:min-h-[700px] flex items-center justify-center">
         {/* Dynamic Images Background */}
-        <div className="absolute inset-0 z-0 flex scale-110 -skew-x-[20deg] transform">
+        <div className="absolute inset-0 z-0 flex">
           {heroImages.length > 0 ? (
             heroImages.map((img, i) => (
-              <div key={i} className={`flex-1 h-full relative overflow-hidden ${i < heroImages.length - 1 ? 'border-r-4 border-white/30' : ''}`}>
+              <div key={i} className="flex-1 h-full relative overflow-hidden">
                 {/* Dynamic left offset to align models */}
-                <div className="absolute inset-0 w-[150%] h-full skew-x-[20deg]" style={{ left: `${savedOffsets[i]}%` }}>
-                  <Image src={img} alt="Hero" fill sizes="16vw" className="object-cover object-top opacity-70 brightness-90 transition-transform duration-1000 hover:scale-110 hover:opacity-70 hover:mix-blend-normal" />
+                <div className="absolute inset-0 w-full h-full">
+                  <Image src={img} alt="Hero" fill sizes="16vw" className="object-contain object-bottom opacity-95" />
                 </div>
               </div>
             ))
