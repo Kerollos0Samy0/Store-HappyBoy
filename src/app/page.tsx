@@ -2,7 +2,7 @@
 import Image from "next/image";
 import ProductCard from "@/components/ProductCard";
 import { initializeApp, getApps } from "firebase/app";
-import { getFirestore, collection, getDocs, query } from "firebase/firestore";
+import { getFirestore, collection, getDocs, query, doc, getDoc } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -68,6 +68,14 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
     heroImages.push(heroImages[0]);
   }
 
+  let savedOffsets = [-25, -15, -15, -25, -15, -5];
+  try {
+    const settingsDoc = await getDoc(doc(db, "settings", "hero"));
+    if (settingsDoc.exists() && settingsDoc.data().offsets) {
+      savedOffsets = settingsDoc.data().offsets;
+    }
+  } catch(e) {}
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
@@ -78,8 +86,8 @@ export default async function Home(props: { searchParams: Promise<{ tab?: string
             heroImages.map((img, i) => (
               <div key={i} className={`flex-1 h-full relative overflow-hidden ${i < heroImages.length - 1 ? 'border-r-4 border-white/30' : ''}`}>
                 {/* Dynamic left offset to align models */}
-                <div className={`absolute inset-0 w-[150%] h-full skew-x-[20deg] ${['-left-[25%]', '-left-[15%]', '-left-[15%]', '-left-[25%]', '-left-[15%]', '-left-[5%]'][i] || '-left-[25%]'}`}>
-                  <Image src={img} alt="Hero" fill sizes="16vw" className="object-cover object-top opacity-40 mix-blend-luminosity brightness-75 transition-transform duration-1000 hover:scale-110 hover:opacity-70 hover:mix-blend-normal" />
+                <div className="absolute inset-0 w-[150%] h-full skew-x-[20deg]" style={{ left: `${savedOffsets[i]}%` }}>
+                  <Image src={img} alt="Hero" fill sizes="16vw" className="object-cover object-top opacity-70 brightness-90 transition-transform duration-1000 hover:scale-110 hover:opacity-70 hover:mix-blend-normal" />
                 </div>
               </div>
             ))
